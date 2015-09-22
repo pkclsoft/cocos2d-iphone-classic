@@ -111,7 +111,12 @@ enum {
 		
 		// XXX: in v0.7, winSize should return the visible size
 		// XXX: so the bar calculation should be done there
-#ifdef __CC_PLATFORM_IOS
+        
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+        // code that only runs on Apple TV
+        CGRect r = CGRectZero;
+        s.height -= r.size.height;
+#elif defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
 		s.height -= r.size.height;
 #endif
