@@ -483,10 +483,24 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     
     if (definition.dimensions.width == 0 || definition.dimensions.height == 0)
     {
-        CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-        CGSize dim = [string sizeWithFont:uifont
-                 constrainedToSize:boundingSize
-                     lineBreakMode:NSLineBreakByWordWrapping];
+//        CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+//        CGSize dim = [string sizeWithFont:uifont
+//                 constrainedToSize:boundingSize
+//                     lineBreakMode:NSLineBreakByWordWrapping];
+        
+        CGSize size = [string sizeWithAttributes:
+                       @{NSFontAttributeName: uifont}];
+        
+//        CGRect textRect = [string boundingRectWithSize:boundingSize
+//                                             options:NSStringDrawingUsesLineFragmentOrigin
+//                                          attributes:@{NSFontAttributeName:uifont}
+//                                             context:nil];
+//        
+//        CGSize dim = CGSizeMake(ceilf(textRect.size.width), ceilf(textRect.size.height));
+        
+        // Values are fractional -- you should take the ceilf to get equivalent values
+        CGSize dim = CGSizeMake(ceilf(size.width), ceilf(size.height));
+        
         
         if(dim.width == 0)
             dim.width = 1;
@@ -617,7 +631,22 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     }
     else
     {
-        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:computedDimension lineBreakMode:linebreaks[definition.lineBreakMode] ];
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        // Create the attributes dictionary with the font and paragraph style
+        NSDictionary *attributes = @{
+                                     NSFontAttributeName:uifont,
+                                     NSParagraphStyleAttributeName:paragraphStyle
+                                     };
+        
+        CGRect textRect = [string boundingRectWithSize:computedDimension
+                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                          attributes:attributes
+                                             context:nil];
+        
+        CGSize drawSize = textRect.size;
+        
         
         if(definition.vertAlignment == kCCVerticalTextAlignmentBottom)
         {
@@ -631,8 +660,18 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     
 	// must follow the same order of CCTextureAligment
 	NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
-	
-	[string drawInRect:drawArea withFont:uifont lineBreakMode:linebreaks[definition.lineBreakMode] alignment:alignments[definition.alignment]];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    paragraphStyle.lineBreakMode = linebreaks[definition.lineBreakMode];
+    paragraphStyle.alignment = alignments[definition.alignment];
+    
+    // Create the attributes dictionary with the font and paragraph style
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:uifont,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    [string drawInRect:drawArea withAttributes:attributes];
     
 
 	UIGraphicsPopContext();
@@ -705,7 +744,22 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	}
 	else
 	{
-		CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:linebreaks[lineBreakMode] ];
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        // Create the attributes dictionary with the font and paragraph style
+        NSDictionary *attributes = @{
+                                     NSFontAttributeName:uifont,
+                                     NSParagraphStyleAttributeName:paragraphStyle
+                                     };
+        
+        CGRect textRect = [string boundingRectWithSize:dimensions
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                            attributes:attributes
+                                               context:nil];
+        
+        CGSize drawSize = textRect.size;
+
 		
 		if(vAlignment == kCCVerticalTextAlignmentBottom)
 		{
@@ -719,8 +773,19 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	// must follow the same order of CCTextureAligment
 	NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
-	
-	[string drawInRect:drawArea withFont:uifont lineBreakMode:linebreaks[lineBreakMode] alignment:alignments[hAlignment]];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    paragraphStyle.lineBreakMode = linebreaks[lineBreakMode];
+    paragraphStyle.alignment = alignments[hAlignment];
+    
+    // Create the attributes dictionary with the font and paragraph style
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:uifont,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    [string drawInRect:drawArea withAttributes:attributes];
+
 
 	UIGraphicsPopContext();
 
@@ -1082,9 +1147,23 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	// Is it a multiline ? sizeWithFont: only works with single line.
 	CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
-	dim = [string sizeWithFont:font
-			 constrainedToSize:boundingSize
-				 lineBreakMode:NSLineBreakByWordWrapping];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    // Create the attributes dictionary with the font and paragraph style
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:font,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    CGRect textRect = [string boundingRectWithSize:boundingSize
+                                           options:NSStringDrawingUsesLineFragmentOrigin
+                                        attributes:attributes
+                                           context:nil];
+    
+    dim = textRect.size;
+
 	
 	if(dim.width == 0)
 		dim.width = 1;
