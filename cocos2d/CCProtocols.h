@@ -130,7 +130,7 @@
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
 -(void) updateProjection;
 
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
@@ -148,7 +148,7 @@
 
 #pragma mark - CCAccelerometerDelegate
 
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 /** CCAccelerometerDelegate delegate */
 @class UIAcceleration;
 @class UIAccelerometer;
