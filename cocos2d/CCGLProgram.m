@@ -140,16 +140,49 @@ typedef void (*GLLogFunction) (GLuint program,
 	return [NSString stringWithFormat:@"<%@ = %p | Program = %i, VertexShader = %i, FragmentShader = %i>", [self class], self, _program, _vertShader, _fragShader];
 }
 
+#define EXTENSION_STRING "#extension GL_OES_standard_derivatives : enable"
+
 
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type byteArray:(const GLchar *)source
 {
     GLint status;
-
+    
     if (!source)
         return NO;
+#if (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0) || defined(__TV_OS_VERSION_MAX_ALLOWED)
+//    NSLog(@"USING IOS9 shaders");
+    static NSString * g_extensionStr = @EXTENSION_STRING;
+    // BEGIN workaround for Xcode 7 ios9----
+    BOOL hasExtension = NO;
+    NSString *sourceStr = [NSString stringWithUTF8String:source];
+    if([sourceStr containsString:g_extensionStr]) {
+        hasExtension = YES;
+        NSArray *strs = [sourceStr componentsSeparatedByString:g_extensionStr];
+        assert(strs.count == 2);
+        sourceStr = [strs componentsJoinedByString:@"\n"];
+        source = (GLchar *)[sourceStr UTF8String];
+    }
+    
+    const GLchar *sources[] = {
+        (hasExtension ? EXTENSION_STRING "\n" : ""),
+#ifdef __CC_PLATFORM_IOS
+        (type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
+#endif
+        "uniform mat4 CC_PMatrix;\n"
+        "uniform mat4 CC_MVMatrix;\n"
+        "uniform mat4 CC_MVPMatrix;\n"
+        "uniform vec4 CC_Time;\n"
+        "uniform vec4 CC_SinTime;\n"
+        "uniform vec4 CC_CosTime;\n"
+        "uniform vec4 CC_Random01;\n"
+        "//CC INCLUDES END\n\n",
+        source,
+    };
+#else
+//    NSLog(@"USING IOS8 shaders");
 		
 		const GLchar *sources[] = {
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 			(type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
 #endif
 			"uniform mat4 CC_PMatrix;\n"
@@ -162,6 +195,8 @@ typedef void (*GLLogFunction) (GLuint program,
 			"//CC INCLUDES END\n\n",
 			source,
 		};
+    
+#endif
 		
     *shader = glCreateShader(type);
     glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, NULL);
