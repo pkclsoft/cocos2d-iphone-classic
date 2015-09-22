@@ -53,7 +53,7 @@ typedef enum {
  - It can receive Keyboard events on Mac
  - It can receive Mouse events on Mac
 */
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 @interface CCLayer : CCNode <CCAccelerometerDelegate, CCTouchAllAtOnceDelegate, CCTouchOneByOneDelegate>
 {
 	BOOL _touchEnabled;
@@ -93,6 +93,30 @@ typedef enum {
  */
 -(void) setAccelerometerInterval:(float)interval;
 
+#elif defined(__TV_OS_VERSION_MAX_ALLOWED)
+
+@interface CCLayer : CCNode <CCTouchAllAtOnceDelegate, CCTouchOneByOneDelegate>
+{
+    BOOL _touchEnabled;
+    NSInteger _touchPriority;
+    ccTouchesMode _touchMode;
+    BOOL _touchSwallow;
+}
+
+/** whether or not it will receive Touch events
+ @since v0.8.1
+ */
+@property(nonatomic, assign, getter = isTouchEnabled) BOOL touchEnabled;
+/** priority of the touch events. Default is 0 */
+@property(nonatomic, assign) NSInteger touchPriority;
+/** Touch modes.
+	- kCCTouchesAllAtOnce: Receives all the available touches at once.
+	- kCCTouchesOneByOne: Receives one touch at the time.
+ */
+@property(nonatomic, assign) ccTouchesMode touchMode;
+
+/** whether touch events are swallowed (in kCCTouchesOneByOne mode) */
+@property(nonatomic, assign) BOOL touchSwallow;
 
 #elif defined(__CC_PLATFORM_MAC)
 

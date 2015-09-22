@@ -52,7 +52,7 @@
 #pragma mark -
 #pragma mark Layer
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 @interface CCLayer ()
 -(void) registerWithTouchDispatcher;
 @end
@@ -75,7 +75,7 @@
 		_touchMode = kCCTouchesAllAtOnce;
         _touchSwallow = YES;
 
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 		_accelerometerEnabled = NO;
 #elif defined(__CC_PLATFORM_MAC)
         _gestureEnabled = NO;
@@ -90,7 +90,7 @@
 
 #pragma mark Layer - iOS - Touch and Accelerometer related
 
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 -(void) registerWithTouchDispatcher
 {
 	CCDirector *director = [CCDirector sharedDirector];
@@ -100,6 +100,9 @@
 	else /* one by one */
 		[[director touchDispatcher] addTargetedDelegate:self priority:_touchPriority swallowsTouches:_touchSwallow];
 }
+
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
+// code that doesn't run on Apple TV
 
 -(BOOL) isAccelerometerEnabled
 {
@@ -123,6 +126,8 @@
 {
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
 }
+
+#endif //!defined(__TV_OS_VERSION_MAX_ALLOWED)
 
 -(BOOL) isTouchEnabled
 {
@@ -376,7 +381,7 @@
 // Can't register mouse, touches here because of #issue #1018, and #1021
 -(void) onEnterTransitionDidFinish
 {
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 	if( _accelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
 #endif
@@ -389,13 +394,18 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 
-#ifdef __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
 	if( _touchEnabled )
 		[[director touchDispatcher] removeDelegate:self];
 
 	if( _accelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
+#elif defined(__TV_OS_VERSION_MAX_ALLOWED)
+    
+    if( _touchEnabled )
+        [[director touchDispatcher] removeDelegate:self];
 
+    
 #elif defined(__CC_PLATFORM_MAC)
 	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
 	if( _mouseEnabled )
