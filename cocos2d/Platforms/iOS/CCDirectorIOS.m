@@ -305,7 +305,7 @@ float	__ccContentScaleFactor = 1;
 -(BOOL) enableRetinaDisplay:(BOOL)enabled
 {
 	// Already enabled ?
-	if( enabled && __ccContentScaleFactor == 2 )
+    if( enabled && (__ccContentScaleFactor == 2 || __ccContentScaleFactor == 3) )
 		return YES;
 
 	// Already disabled
@@ -320,7 +320,7 @@ float	__ccContentScaleFactor = 1;
 	if ([[UIScreen mainScreen] scale] == 1.0)
 		return NO;
 
-	float newScale = enabled ? 2 : 1;
+	float newScale = enabled ? [[UIScreen mainScreen] scale] : 1;
 	[self setContentScaleFactor:newScale];
 
 	// Load Hi-Res FPS label
@@ -428,6 +428,7 @@ GLToClipTransform(kmMat4 *transformOut)
 	}
 }
 
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -437,6 +438,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
 	return ret;
 }
+#endif
 
 // Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
 //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

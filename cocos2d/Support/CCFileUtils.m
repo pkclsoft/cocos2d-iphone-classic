@@ -39,8 +39,14 @@ NSString *kCCFileUtilsiPhone = @"iphone";
 NSString *kCCFileUtilsiPhoneHD = @"iphonehd";
 NSString *kCCFileUtilsiPhone5 = @"iphone5";
 NSString *kCCFileUtilsiPhone5HD = @"iphone5hd";
+NSString *kCCFileUtilsiPhone6 = @"iphone6";
+NSString *kCCFileUtilsiPhoneRetinaHD = @"iphone6hd";
 NSString *kCCFileUtilsMac = @"mac";
 NSString *kCCFileUtilsMacHD = @"machd";
+
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+NSString *kCCFileUtilsTV = @"tv";
+#endif
 
 NSString *kCCFileUtilsDefaultSearchPath = @"";
 
@@ -154,15 +160,40 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		
 		_filenameLookup = [[NSMutableDictionary alloc] initWithCapacity:10];
 								  
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+        _suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                         @"-tv", kCCFileUtilsTV,
+                         @"-ipadhd", kCCFileUtilsiPadHD,
+                         @"-ipad", kCCFileUtilsiPad,
+                         @"", kCCFileUtilsiPhone,
+                         @"-hd", kCCFileUtilsiPhoneHD,
+                         @"-568h", kCCFileUtilsiPhone5,
+                         @"-568h", kCCFileUtilsiPhone5HD,
+                         @"-667h", kCCFileUtilsiPhone6,
+                         @"-736h", kCCFileUtilsiPhoneRetinaHD,
+                         @"", kCCFileUtilsDefault,
+                         nil];
 		
-#ifdef __CC_PLATFORM_IOS
+        _directoriesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                            @"resources-tv", kCCFileUtilsTV,
+                            @"resources-ipadhd", kCCFileUtilsiPadHD,
+                            @"resources-iphone", kCCFileUtilsiPhone,
+                            @"resources-iphonehd", kCCFileUtilsiPhoneHD,
+                            @"resources-iphone5", kCCFileUtilsiPhone5,
+                            @"resources-iphone5hd", kCCFileUtilsiPhone5HD,
+                            @"", kCCFileUtilsDefault,
+                            nil];
+        
+#elif defined(__CC_PLATFORM_IOS)
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
 						 @"-ipad", kCCFileUtilsiPad,
 						 @"-ipadhd", kCCFileUtilsiPadHD,
 						 @"", kCCFileUtilsiPhone,
 						 @"-hd", kCCFileUtilsiPhoneHD,
-						 @"-iphone5", kCCFileUtilsiPhone5,
-						 @"-iphone5hd", kCCFileUtilsiPhone5HD,
+						 @"-568h", kCCFileUtilsiPhone5,
+						 @"-568h", kCCFileUtilsiPhone5HD,
+						 @"-667h", kCCFileUtilsiPhone6,
+						 @"-736h", kCCFileUtilsiPhoneRetinaHD,
 						 @"", kCCFileUtilsDefault,
 						 nil];
 
@@ -226,11 +257,15 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 - (void) buildSearchResolutionsOrder
 {
-	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
-
 	[_searchResolutionsOrder removeAllObjects];
 	
-#ifdef __CC_PLATFORM_IOS
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+    [_searchResolutionsOrder addObject:kCCFileUtilsTV];
+    [_searchResolutionsOrder addObject:kCCFileUtilsiPadHD];
+    [_searchResolutionsOrder addObject:kCCFileUtilsiPad];
+#elif defined(__CC_PLATFORM_IOS)
+	NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+
 	if (device == kCCDeviceiPadRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:kCCFileUtilsiPadHD];
@@ -247,6 +282,23 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5HD];
 			[_searchResolutionsOrder addObject:kCCFileUtilsiPhoneHD];
 		}
+	}
+	else if (device == kCCDeviceiPhone6)
+	{
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone6];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5HD];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhoneHD];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone];
+	}
+	else if (device == kCCDeviceiPhoneRetinaHDDisplay)
+	{
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhoneRetinaHD];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone6];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5HD];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhoneHD];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5];
+		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone];
 	}
 	else if (device == kCCDeviceiPhone5RetinaDisplay)
 	{
@@ -271,6 +323,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 	
 #elif defined(__CC_PLATFORM_MAC)
+    NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
+    
 	if (device == kCCDeviceMacRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:kCCFileUtilsMacHD];
@@ -398,7 +452,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		NSString *value = [dictionary objectForKey:key];
 		if( [value isEqualToString:k] ) {
 			
-#ifdef __CC_PLATFORM_IOS
+            
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+            if( [key isEqualToString:kCCFileUtilsTV] )
+            return kCCResolutionTV;
+#endif
+#if defined(__CC_PLATFORM_IOS)
 			// XXX Add this in a Dictionary
 			if( [key isEqualToString:kCCFileUtilsiPad] )
 				return kCCResolutioniPad;
@@ -716,6 +775,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
 	[self setEnableiPhoneResourcesOniPad:enableFallbackSuffixes];
 }
+
+
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+- (BOOL) tvDisplayFileExistsAtPath:(NSString *)path {
+    return [self fileExistsAtPath:path withSuffix:[_suffixesDict objectForKey:kCCFileUtilsTV]];
+}
+#endif
 
 #ifdef __CC_PLATFORM_IOS
 

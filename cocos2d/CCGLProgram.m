@@ -73,12 +73,12 @@ typedef void (*GLLogFunction) (GLuint program,
 
 + (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray
 {
-	return [[[self alloc] initWithVertexShaderByteArray:vShaderByteArray fragmentShaderByteArray:fShaderByteArray] autorelease];
+	return [[[CCGLProgram alloc] initWithVertexShaderByteArray:vShaderByteArray fragmentShaderByteArray:fShaderByteArray] autorelease];
 }
 
 + (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
 {
-	return [[[self alloc] initWithVertexShaderFilename:vShaderFilename fragmentShaderFilename:fShaderFilename] autorelease];
+	return [[[CCGLProgram alloc] initWithVertexShaderFilename:vShaderFilename fragmentShaderFilename:fShaderFilename] autorelease];
 }
 
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray

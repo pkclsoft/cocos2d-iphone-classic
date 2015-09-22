@@ -39,6 +39,10 @@ extern NSString const *kCCFileUtilsiPhone5HD;
 extern NSString const *kCCFileUtilsMac;
 extern NSString const *kCCFileUtilsMacHD;
 
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+extern NSString const *kCCFileUtilsTV;
+#endif
+
 extern NSString const *kCCFileUtilsDefaultSearchPath;
 
 enum {
@@ -367,6 +371,15 @@ enum {
  @since v2.0
  */
 -(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename;
+
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+/** Returns whether or not a given filename exists with the TV suffix.
+ Only available on tvOS. Not supported on OS X or iOS.
+ @since v2.2
+ */
+-(BOOL) tvDisplayFileExistsAtPath:(NSString*)filename;
+
+#endif
 
 #endif // __CC_PLATFORM_MAC
 

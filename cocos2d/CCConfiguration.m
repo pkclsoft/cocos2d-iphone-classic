@@ -129,7 +129,9 @@ static char * glExtensions;
 -(NSInteger) runningDevice
 {
 	NSInteger ret=-1;
-	
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+    ret = kCCDeviceTVDisplay;
+#else
 #ifdef __CC_PLATFORM_IOS
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -138,13 +140,19 @@ static char * glExtensions;
 	}
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
 	{
-		// From http://stackoverflow.com/a/12535566
-		BOOL isiPhone5 = CGSizeEqualToSize([[UIScreen mainScreen] preferredMode].size,CGSizeMake(640, 1136));
-		
-		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
-			ret = isiPhone5 ? kCCDeviceiPhone5RetinaDisplay : kCCDeviceiPhoneRetinaDisplay;
-		} else
-			ret = isiPhone5 ? kCCDeviceiPhone5 : kCCDeviceiPhone;
+        if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+            if (([[CCDirector sharedDirector] winSize].width == 568) || ([[CCDirector sharedDirector] winSize].height == 568)) {
+                ret = kCCDeviceiPhone5RetinaDisplay;
+            } else if (([[CCDirector sharedDirector] winSize].width == 667) || ([[CCDirector sharedDirector] winSize].height == 667)) {
+                ret = kCCDeviceiPhone6;
+            } else {
+                ret = kCCDeviceiPhoneRetinaDisplay;
+            }
+        } else if ( CC_CONTENT_SCALE_FACTOR() == 3) {
+            ret = kCCDeviceiPhoneRetinaHDDisplay;
+        } else {
+            ret = kCCDeviceiPhone;
+        }
 	}
 	
 #elif defined(__CC_PLATFORM_MAC)
@@ -153,7 +161,8 @@ static char * glExtensions;
 	ret = kCCDeviceMac;
 	
 #endif // __CC_PLATFORM_MAC
-	
+#endif
+    
 	return ret;
 }
 

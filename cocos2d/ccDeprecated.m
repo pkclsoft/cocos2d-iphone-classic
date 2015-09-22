@@ -136,7 +136,9 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 -(void) setIsAccelerometerEnabled:(BOOL)enabled
 {
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
 	[self setAccelerometerEnabled:enabled];
+#endif
 }
 #elif __CC_PLATFORM_MAC
 -(void) setIsTouchEnabled:(BOOL)enabled

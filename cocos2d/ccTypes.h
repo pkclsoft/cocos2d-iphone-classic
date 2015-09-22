@@ -326,7 +326,11 @@ typedef enum
 {
 	//! Unknown resolution type
 	kCCResolutionUnknown,
-#ifdef __CC_PLATFORM_IOS
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+        //! TV resolution type
+        kCCResolutionTV,
+#endif
+#if defined(__CC_PLATFORM_IOS)
 	//! iPhone resolution type
 	kCCResolutioniPhone,
 	//! iPhone RetinaDisplay resolution type
@@ -335,6 +339,10 @@ typedef enum
 	kCCResolutioniPhone5,
 	//! iPhone 5 RetinaDisplay resolution type
 	kCCResolutioniPhone5RetinaDisplay,
+        //! iPhone 6 RetinaDisplay resolution type
+        kCCResolutioniPhone6RetinaDisplay,
+        //! iPhone Retina HD resolution type
+        kCCResolutioniPhoneRetinaHDDisplay,
 	//! iPad resolution type
 	kCCResolutioniPad,
 	//! iPad Retina Display resolution type

@@ -277,7 +277,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[_target setPosition:newPos];
+	[(CCNode*)_target setPosition:newPos];
 	_previousPosition = newPos;
 }
 
@@ -303,7 +303,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 -(void) updatePosition:(CGPoint)newPos
 {
 	CGPoint p = ccpAdd(newPos, _startPosition);
-	[_target setPosition:p];
+	[(CCNode*)_target setPosition:p];
 	_previousPosition = p;
 }
 

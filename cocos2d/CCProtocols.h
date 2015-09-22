@@ -130,9 +130,11 @@
 /** Called by CCDirector when the projection is updated, and "custom" projection is used */
 -(void) updateProjection;
 
-#if defined(__CC_PLATFORM_IOS) && !defined(__TV_OS_VERSION_MAX_ALLOWED)
+#if defined(__CC_PLATFORM_IOS)
+#if !defined(__TV_OS_VERSION_MAX_ALLOWED)
 /** Returns a Boolean value indicating whether the CCDirector supports the specified orientation. Default value is YES (supports all possible orientations) */
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+#endif
 
 // Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
 //- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;

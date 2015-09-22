@@ -38,7 +38,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	CCCamera *camera = [_target camera];
+	CCCamera *camera = [(CCNode*)_target camera];
 	[camera centerX:&_centerXOrig centerY:&_centerYOrig centerZ:&_centerZOrig];
 	[camera eyeX:&_eyeXOrig eyeY:&_eyeYOrig eyeZ:&_eyeZOrig];
 	[camera upX:&_upXOrig upY:&_upYOrig upZ: &_upZOrig];
@@ -112,7 +112,7 @@
 	float j = sinf(za) * sinf(xa) * r + _centerYOrig;
 	float k = cosf(za) * r + _centerZOrig;
 
-	[[_target camera] setEyeX:i eyeY:j eyeZ:k];
+	[[(CCNode*)_target camera] setEyeX:i eyeY:j eyeZ:k];
 }
 
 -(void) sphericalRadius:(float*) newRadius zenith:(float*) zenith azimuth:(float*) azimuth
@@ -121,7 +121,7 @@
 	float r; // radius
 	float s;
 
-	CCCamera *camera = [_target camera];
+	CCCamera *camera = [(CCNode*)_target camera];
 	[camera eyeX:&ex eyeY:&ey eyeZ:&ez];
 	[camera centerX:&cx centerY:&cy centerZ:&cz];
 

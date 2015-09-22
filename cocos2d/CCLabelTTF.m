@@ -155,6 +155,7 @@
 
 - (NSString*) getFontName:(NSString*)fontName
 {
+#ifdef __CC_PLATFORM_MAC
 	// Custom .ttf file ?
     if ([[fontName lowercaseString] hasSuffix:@".ttf"])
     {
@@ -165,6 +166,7 @@
 
 		return [[fontFile lastPathComponent] stringByDeletingPathExtension];
     }
+#endif //
 
     return fontName;
 }

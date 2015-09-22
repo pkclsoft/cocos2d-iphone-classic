@@ -56,11 +56,17 @@ enum {
 	kCCDeviceiPhoneRetinaDisplay,
 	kCCDeviceiPhone5,
 	kCCDeviceiPhone5RetinaDisplay,
+	kCCDeviceiPhone6,
+	kCCDeviceiPhoneRetinaHDDisplay,
 	kCCDeviceiPad,
 	kCCDeviceiPadRetinaDisplay,
 
 	kCCDeviceMac,
 	kCCDeviceMacRetinaDisplay,
+    
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+    kCCDeviceTVDisplay
+#endif
 };
 
 /**

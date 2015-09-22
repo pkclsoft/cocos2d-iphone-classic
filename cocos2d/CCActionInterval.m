@@ -651,7 +651,7 @@
 @implementation CCMoveBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {
-	return [[[self alloc] initWithDuration:t position:p ] autorelease];
+	return [[[CCMoveBy alloc] initWithDuration:t position:p ] autorelease];
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
@@ -687,7 +687,7 @@
 	CGPoint diff = ccpSub(currentPos, _previousPos);
 	_startPos = ccpAdd( _startPos, diff);
 	CGPoint newPos =  ccpAdd( _startPos, ccpMult(_positionDelta, t) );
-	[_target setPosition: newPos];
+	[(CCNode*)_target setPosition: newPos];
 	_previousPos = newPos;
 #else
 	[node setPosition: ccpAdd( _startPos, ccpMult(_positionDelta, t))];
