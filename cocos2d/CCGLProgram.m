@@ -155,7 +155,7 @@ typedef void (*GLLogFunction) (GLuint program,
     // BEGIN workaround for Xcode 7 ios9----
     BOOL hasExtension = NO;
     NSString *sourceStr = [NSString stringWithUTF8String:source];
-    if([sourceStr containsString:g_extensionStr]) {
+    if ([sourceStr rangeOfString:g_extensionStr].location != NSNotFound) {
         hasExtension = YES;
         NSArray *strs = [sourceStr componentsSeparatedByString:g_extensionStr];
         assert(strs.count == 2);
