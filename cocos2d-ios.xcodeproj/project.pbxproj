@@ -789,6 +789,10 @@
 		A0EFA880169CDFA4006D1B22 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		A0EFA881169CDFA4006D1B22 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		A0EFA882169CDFA4006D1B22 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		D04555B71BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h in Headers */ = {isa = PBXBuildFile; fileRef = D04555B51BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h */; };
+		D04555B81BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h in Headers */ = {isa = PBXBuildFile; fileRef = D04555B51BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h */; };
+		D04555B91BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m in Sources */ = {isa = PBXBuildFile; fileRef = D04555B61BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m */; };
+		D04555BA1BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m in Sources */ = {isa = PBXBuildFile; fileRef = D04555B61BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m */; };
 		E0112F53120CB406006667F8 /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = E0112F4F120CB406006667F8 /* CCTransitionPageTurn.h */; };
 		E0112F54120CB406006667F8 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
@@ -1270,6 +1274,8 @@
 		A0DA0BDD15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_vert.h; sourceTree = "<group>"; };
 		A0EFA7AC169CDF9C006D1B22 /* libcocos2d_box2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d_box2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0EFA886169CDFA4006D1B22 /* libcocos2d_chipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d_chipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D04555B51BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CCNode+SFGestureRecognizers.h"; path = "external/GestureRecognizers/CCNode+SFGestureRecognizers.h"; sourceTree = "<group>"; };
+		D04555B61BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CCNode+SFGestureRecognizers.m"; path = "external/GestureRecognizers/CCNode+SFGestureRecognizers.m"; sourceTree = "<group>"; };
 		E0112F4F120CB406006667F8 /* CCTransitionPageTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionPageTurn.h; sourceTree = "<group>"; };
 		E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionPageTurn.m; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
@@ -1489,6 +1495,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				D04555B41BBA88600064A8FD /* GestureRecognizers */,
 				A015BFAB13B826D800C73E76 /* kazmath */,
 				50E5F309110690D300E3FCF5 /* Chipmunk */,
 				5031650810277785003ACFE7 /* libpng */,
@@ -2050,6 +2057,15 @@
 			name = Profiling;
 			sourceTree = "<group>";
 		};
+		D04555B41BBA88600064A8FD /* GestureRecognizers */ = {
+			isa = PBXGroup;
+			children = (
+				D04555B51BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h */,
+				D04555B61BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m */,
+			);
+			name = GestureRecognizers;
+			sourceTree = "<group>";
+		};
 		E0BC7DA11342CE83001B4DCC /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -2229,6 +2245,7 @@
 				A046E29714C1DB7D0005BBF2 /* CCGLView.h in Headers */,
 				A046E29914C1DB7E0005BBF2 /* CCWindow.h in Headers */,
 				A09AB76914EA12F7009C8B91 /* ccDeprecated.h in Headers */,
+				D04555B81BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h in Headers */,
 				A0A10B5714F3011F00FA38C1 /* ccGLStateCache.h in Headers */,
 				A0C87D1A14F9A3A100C0E8B2 /* NSThread+performBlock.h in Headers */,
 				A093FF09150E9BE00039327A /* ccShaders.h in Headers */,
@@ -2276,6 +2293,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D04555B71BBA888C0064A8FD /* CCNode+SFGestureRecognizers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2949,6 +2967,7 @@
 				A093FF0A150E9BE00039327A /* ccShaders.m in Sources */,
 				A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */,
+				D04555BA1BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m in Sources */,
 				A04FA967156303C600EC18D4 /* ccCArray.m in Sources */,
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
 				A0D7D9D015E2E730000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
@@ -2977,6 +2996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D04555B91BBA888C0064A8FD /* CCNode+SFGestureRecognizers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
