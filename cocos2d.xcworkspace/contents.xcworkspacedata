@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:coco2d-tvos.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:cocos2d-ios.xcodeproj">
    </FileRef>
    <FileRef

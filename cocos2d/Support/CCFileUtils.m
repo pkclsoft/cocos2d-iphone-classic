@@ -676,6 +676,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 }
 
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+- (void) setTVDisplaySuffix:(NSString*)suffix {
+    
+    [_suffixesDict setObject:suffix forKey:kCCFileUtilsTV];
+}
+#endif
+
 #ifdef __CC_PLATFORM_IOS
 
 -(void) setiPadRetinaDisplaySuffix:(NSString *)suffix

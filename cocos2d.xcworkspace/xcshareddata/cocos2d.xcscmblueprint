@@ -1,0 +1,65 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "52029122B5BBFB91B393EC96F6D84F7C81F9F191",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "999D2B244F4BEADDDD09CD5EE2574031B24F399A" : 0,
+    "3F8012DB8278C2C550CD56F92548D5049BC62F09" : 0,
+    "8A15A8EA0B3D0B497C4883425BC74DF995224BB3" : 0,
+    "C6249B48B7CF4DAB23039AC2229F2E067714E113" : 0,
+    "5567F5CAC8655FB8FE326EC9D98BC3EEBAD00565" : 0,
+    "ECFF97C7085E758E76254953D5CFA588773A129F" : 0,
+    "52029122B5BBFB91B393EC96F6D84F7C81F9F191" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "700DBAD6-8E4D-44E0-BF85-D99417CD0079",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "999D2B244F4BEADDDD09CD5EE2574031B24F399A" : "cocos2d-iphone-classic-tvOS\/external\/Chipmunk\/",
+    "3F8012DB8278C2C550CD56F92548D5049BC62F09" : "cocos2d-iphone-classic-tvOS\/tests\/cocos2d-js-tests\/",
+    "8A15A8EA0B3D0B497C4883425BC74DF995224BB3" : "cocos2d-iphone-classic-tvOS\/external\/JavaScript\/JRSwizzle\/",
+    "C6249B48B7CF4DAB23039AC2229F2E067714E113" : "cocos2d-iphone-classic-tvOS\/external\/JavaScript\/jsbindings_support\/",
+    "5567F5CAC8655FB8FE326EC9D98BC3EEBAD00565" : "cocos2d-iphone-classic-tvOS\/external\/JavaScript\/jsbindings\/",
+    "ECFF97C7085E758E76254953D5CFA588773A129F" : "cocos2d-iphone-classic-tvOS\/external\/CCBReader\/",
+    "52029122B5BBFB91B393EC96F6D84F7C81F9F191" : "cocos2d-iphone-classic-tvOS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "cocos2d",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "cocos2d.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/cocos2d\/cocos2d-js-tests.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3F8012DB8278C2C550CD56F92548D5049BC62F09"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pkclsoft\/cocos2d-iphone-classic.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "52029122B5BBFB91B393EC96F6D84F7C81F9F191"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/zynga\/jsbindings.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5567F5CAC8655FB8FE326EC9D98BC3EEBAD00565"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/ricardoquesada\/jrswizzle.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8A15A8EA0B3D0B497C4883425BC74DF995224BB3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/slembcke\/Chipmunk-Physics.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "999D2B244F4BEADDDD09CD5EE2574031B24F399A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/ricardoquesada\/jsbindings_support.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C6249B48B7CF4DAB23039AC2229F2E067714E113"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/cocos2d\/CCBReader.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ECFF97C7085E758E76254953D5CFA588773A129F"
+    }
+  ]
+}

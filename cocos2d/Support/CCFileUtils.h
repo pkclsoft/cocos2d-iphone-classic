@@ -204,6 +204,16 @@ enum {
 #endif // __CC_PLATFORM_IOS
 
 
+#if defined(__TV_OS_VERSION_MAX_ALLOWED)
+/** Sets the TV Display suffixes to load resources.
+ By default it is "-tv", "-ipadhd", "-ipad", "", in that order.
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v2.0
+ */
+- (void) setTVDisplaySuffix:(NSString*)suffix;
+#endif
+
 /** returns the shared file utils instance */
 +(CCFileUtils*) sharedFileUtils;
 
