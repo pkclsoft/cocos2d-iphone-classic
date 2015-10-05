@@ -6,6 +6,7 @@
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
+#import "SimpleAudioEngine.h"
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -45,6 +46,8 @@
 		
 		// add the label as a child to this Layer
 		[self addChild: label];
+        
+        [[SimpleAudioEngine sharedEngine] playEffect:@"ping1.aiff"];
 	}
 	return self;
 }

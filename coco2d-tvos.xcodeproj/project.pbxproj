@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D013E4351BC26DAA003947A7 /* libCocosDenshion_tvos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D013E4321BC26D9C003947A7 /* libCocosDenshion_tvos.a */; };
+		D013E5161BC26ED1003947A7 /* ping1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D013E5151BC26ED1003947A7 /* ping1.aiff */; };
 		D0C88BA31BBD56BA0043A1BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88BA21BBD56BA0043A1BD /* QuartzCore.framework */; };
 		D0C88BA51BBD56BA0043A1BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88BA41BBD56BA0043A1BD /* OpenGLES.framework */; };
 		D0C88BA71BBD56BA0043A1BD /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88BA61BBD56BA0043A1BD /* OpenAL.framework */; };
@@ -20,10 +22,37 @@
 		D0C88D4A1BBD56BE0043A1BD /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C88D491BBD56BE0043A1BD /* RootViewController.m */; };
 		D0C88D4D1BBD56BE0043A1BD /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C88D4C1BBD56BE0043A1BD /* HelloWorldLayer.m */; };
 		D0C88F331BBD63C70043A1BD /* libcocos2d_tvos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88F301BBD63B60043A1BD /* libcocos2d_tvos.a */; };
-		D0C88F351BBD64AF0043A1BD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88F341BBD64AF0043A1BD /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D013E4311BC26D9C003947A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D013E4231BC26D1C003947A7;
+			remoteInfo = CocosDenshion_tvos;
+		};
+		D013E4331BC26D9C003947A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D0C88F581BBD670E0043A1BD;
+			remoteInfo = kazmath_tvos;
+		};
+		D013E5131BC26E9E003947A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D013E50F1BC26DE3003947A7;
+			remoteInfo = cocos2d_chipmunk_tvos;
+		};
+		D013E5171BC270DF003947A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D013E40F1BC26D1C003947A7;
+			remoteInfo = CocosDenshion_tvos;
+		};
 		D0C88E371BBD618F0043A1BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
@@ -118,6 +147,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D013E5151BC26ED1003947A7 /* ping1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = ping1.aiff; sourceTree = "<group>"; };
 		D0C88B9F1BBD56BA0043A1BD /* coco2d-tvos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "coco2d-tvos.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C88BA21BBD56BA0043A1BD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D0C88BA41BBD56BA0043A1BD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -145,8 +175,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D013E4351BC26DAA003947A7 /* libCocosDenshion_tvos.a in Frameworks */,
 				D0C88F331BBD63C70043A1BD /* libcocos2d_tvos.a in Frameworks */,
-				D0C88F351BBD64AF0043A1BD /* libz.dylib in Frameworks */,
 				D0C88BA71BBD56BA0043A1BD /* OpenAL.framework in Frameworks */,
 				D0C88BAD1BBD56BA0043A1BD /* UIKit.framework in Frameworks */,
 				D0C88BA31BBD56BA0043A1BD /* QuartzCore.framework in Frameworks */,
@@ -171,6 +201,7 @@
 				D0C88D491BBD56BE0043A1BD /* RootViewController.m */,
 				D0C88D4B1BBD56BE0043A1BD /* HelloWorldLayer.h */,
 				D0C88D4C1BBD56BE0043A1BD /* HelloWorldLayer.m */,
+				D013E5151BC26ED1003947A7 /* ping1.aiff */,
 				D0C88D411BBD56BE0043A1BD /* Supporting Files */,
 				D0C88BA11BBD56BA0043A1BD /* Frameworks */,
 				D0C88BA01BBD56BA0043A1BD /* Products */,
@@ -227,6 +258,9 @@
 				D0C88E4A1BBD618F0043A1BD /* libjsbindings.a */,
 				D0C88E4C1BBD618F0043A1BD /* libkazmath.a */,
 				D0C88F301BBD63B60043A1BD /* libcocos2d_tvos.a */,
+				D013E4341BC26D9C003947A7 /* libkazmath_tvos.a */,
+				D013E4321BC26D9C003947A7 /* libCocosDenshion_tvos.a */,
+				D013E5141BC26E9E003947A7 /* libcocos2d_chipmunk_tvos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,6 +279,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D013E5181BC270DF003947A7 /* PBXTargetDependency */,
 				D0C88F321BBD63BB0043A1BD /* PBXTargetDependency */,
 			);
 			name = "coco2d-tvos";
@@ -289,6 +324,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		D013E4321BC26D9C003947A7 /* libCocosDenshion_tvos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocosDenshion_tvos.a;
+			remoteRef = D013E4311BC26D9C003947A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D013E4341BC26D9C003947A7 /* libkazmath_tvos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libkazmath_tvos.a;
+			remoteRef = D013E4331BC26D9C003947A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D013E5141BC26E9E003947A7 /* libcocos2d_chipmunk_tvos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcocos2d_chipmunk_tvos.a;
+			remoteRef = D013E5131BC26E9E003947A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D0C88E381BBD618F0043A1BD /* libbuild all libs.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -380,6 +436,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D013E5161BC26ED1003947A7 /* ping1.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +457,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D013E5181BC270DF003947A7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CocosDenshion_tvos;
+			targetProxy = D013E5171BC270DF003947A7 /* PBXContainerItemProxy */;
+		};
 		D0C88F321BBD63BB0043A1BD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2d_tvos;

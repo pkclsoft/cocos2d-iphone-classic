@@ -9,6 +9,7 @@
     "8A15A8EA0B3D0B497C4883425BC74DF995224BB3" : 0,
     "C6249B48B7CF4DAB23039AC2229F2E067714E113" : 0,
     "5567F5CAC8655FB8FE326EC9D98BC3EEBAD00565" : 0,
+    "72DD9C74B4D2C5A2DFB02CB9849E544EC030E53F" : 0,
     "ECFF97C7085E758E76254953D5CFA588773A129F" : 0,
     "52029122B5BBFB91B393EC96F6D84F7C81F9F191" : 0
   },
@@ -19,6 +20,7 @@
     "8A15A8EA0B3D0B497C4883425BC74DF995224BB3" : "cocos2d-iphone-classic-tvOS\/external\/JavaScript\/JRSwizzle\/",
     "C6249B48B7CF4DAB23039AC2229F2E067714E113" : "cocos2d-iphone-classic-tvOS\/external\/JavaScript\/jsbindings_support\/",
     "5567F5CAC8655FB8FE326EC9D98BC3EEBAD00565" : "cocos2d-iphone-classic-tvOS\/external\/JavaScript\/jsbindings\/",
+    "72DD9C74B4D2C5A2DFB02CB9849E544EC030E53F" : "claustrophobic\/",
     "ECFF97C7085E758E76254953D5CFA588773A129F" : "cocos2d-iphone-classic-tvOS\/external\/CCBReader\/",
     "52029122B5BBFB91B393EC96F6D84F7C81F9F191" : "cocos2d-iphone-classic-tvOS\/"
   },
@@ -40,6 +42,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/zynga\/jsbindings.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5567F5CAC8655FB8FE326EC9D98BC3EEBAD00565"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Volumes\/netfiles\/GitRepository\/keepitrolling",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "72DD9C74B4D2C5A2DFB02CB9849E544EC030E53F"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/ricardoquesada\/jrswizzle.git",
