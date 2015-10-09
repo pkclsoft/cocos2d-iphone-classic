@@ -521,7 +521,7 @@
 					external/kazmath/include,
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
-					cocos2d,
+					"cocos2d/**",
 					CocosDenshion,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/coco2d-tvos/Info.plist";
@@ -546,7 +546,7 @@
 					external/kazmath/include,
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
-					cocos2d,
+					"cocos2d/**",
 					CocosDenshion,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/coco2d-tvos/Info.plist";

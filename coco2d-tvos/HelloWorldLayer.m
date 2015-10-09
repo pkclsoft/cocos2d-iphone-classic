@@ -7,6 +7,7 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 #import "SimpleAudioEngine.h"
+#import "CCTVMenu.h"
 
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -40,7 +41,7 @@
 		CGSize size = [[CCDirector sharedDirector] winSize];
 	
 		// position the label on the center of the screen
-		label.position =  ccp( size.width /2 , size.height/2 );
+		label.position =  ccp( size.width /2 , size.height*0.75 );
         
         label.color = ccWHITE;
 		
@@ -48,6 +49,19 @@
 		[self addChild: label];
         
         [[SimpleAudioEngine sharedEngine] playEffect:@"ping1.aiff"];
+        
+        
+        CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Item 1" fontName:@"Helvetica" fontSize:66]];
+        item1.position = CGPointMake(size.width * 0.25, size.height * 0.25);
+        CCMenuItemLabel *item2 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Item 2" fontName:@"Helvetica" fontSize:66]];
+        item2.position = CGPointMake(size.width * 0.75, size.height * 0.25);
+        CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Item 3" fontName:@"Helvetica" fontSize:66]];
+        item3.position = CGPointMake(size.width * 0.5, size.height * 0.5);
+        
+        CCTVMenu *menu = [[CCTVMenu alloc] initWithArray:@[item1, item2, item3]];
+        menu.position = CGPointZero;
+        
+        [self addChild:menu];
 	}
 	return self;
 }
