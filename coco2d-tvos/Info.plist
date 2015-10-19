@@ -35,13 +35,13 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<dict>
 		<key>accelerometer</key>
-		<true/>
+		<false/>
 		<key>gamekit</key>
 		<true/>
 		<key>opengles-1</key>
 		<true/>
 		<key>peer-peer</key>
-		<true/>
+		<false/>
 	</dict>
 	<key>UIStatusBarHidden</key>
 	<true/>
