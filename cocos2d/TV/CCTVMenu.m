@@ -11,9 +11,14 @@
 @interface CCTVMenu() <UIGestureRecognizerDelegate>
 
 /**
- *  The pan recognizer for this menu - is used for all the focus management.
+ *  The pan recognizer for this menu - is used alongside the swipeRecognizer for the focus management.
  */
 @property (nonatomic, retain) UIPanGestureRecognizer *panRecognizer;
+
+/**
+ *  The swipe recognizer for this menu - is used alongside the panRecognizer for the focus management.
+ */
+@property (nonatomic, retain) UISwipeGestureRecognizer *swipeRecognizer;
 
 /**
  *  The tap recognizer - this handles presses on the touchpad itself.
@@ -52,6 +57,9 @@
     /// The start point of a pan touch.
     CGPoint startPoint;
     
+    /// The start point of a swipe
+    CGPoint swipeStartPoint;
+    
     /**
      *  These flags are initialised when a menu item is given focus as a way to simply
      *  know at any time what sort of item it is.
@@ -78,6 +86,7 @@
         _playPauseAction = kPlayPauseNone;
         
         [self addPanRecognizer];
+        [self addSwipeRecognizer];
         [self addTapRecognizers];
     }
     
@@ -94,6 +103,7 @@
 {
     if( (self=[super initWithArray:arrayOfItems]) ) {
         [self addPanRecognizer];
+        [self addSwipeRecognizer];
         [self addTapRecognizers];
         
         _focusedItem = nil;
@@ -118,6 +128,7 @@
     [super cleanup];
     
     [self removePanRecognizer];
+    [self removeSwipeRecognizer];
     [self removeTapRecognizers];
     
     if (self.focusAction != nil) {
@@ -401,9 +412,10 @@
 
     if (_enabled == YES) {
         return ((gestureRecognizer == _panRecognizer) && (_panControlActive == YES)) ||
-                (gestureRecognizer == _tapRecognizer) ||
-                (gestureRecognizer == _menuButtonRecognizer) ||
-                (gestureRecognizer == _playPauseButtonRecognizer);
+        ((gestureRecognizer == _swipeRecognizer) && (_panControlActive == YES)) ||
+        (gestureRecognizer == _tapRecognizer) ||
+        (gestureRecognizer == _menuButtonRecognizer) ||
+        (gestureRecognizer == _playPauseButtonRecognizer);
     } else {
         return NO;
     }
@@ -548,6 +560,55 @@
         _panRecognizer = nil;
         
         NSLog(@"CCTVMenu Pan recognizer removed");
+    }
+}
+
+#pragma mark - Swipe Gesture code
+
+- (void) addSwipeRecognizer {
+    if (_swipeRecognizer != nil) {
+        [self removePanRecognizer];
+    }
+    
+    _swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped:)];
+    
+    _swipeRecognizer.direction =
+    UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionLeft |
+    UISwipeGestureRecognizerDirectionRight | UISwipeGestureRecognizerDirectionUp;
+    
+    [_swipeRecognizer setDelegate:self];
+    
+    [[CCDirector sharedDirector].view addGestureRecognizer:_swipeRecognizer];
+    
+    NSLog(@"CCTVMenu Swipe recognizer added");
+}
+
+- (void) removeSwipeRecognizer {
+    if (_swipeRecognizer != nil) {
+        [_swipeRecognizer setDelegate:nil];
+        [[CCDirector sharedDirector].view removeGestureRecognizer:_swipeRecognizer];
+        [_swipeRecognizer release];
+        _swipeRecognizer = nil;
+        
+        NSLog(@"CCTVMenu Swipe recognizer removed");
+    }
+}
+
+- (void) swiped:(UISwipeGestureRecognizer*)recognizer {
+    if (_enabled == NO) {
+        return;
+    }
+    
+    CGPoint b = [[CCDirector sharedDirector] convertToGL:[recognizer locationInView:recognizer.view]];
+    
+    float angle = fmodf((360.0 + CC_RADIANS_TO_DEGREES([self angleFromPoint:swipeStartPoint toPoint:b])), 360.0);
+    
+    if([recognizer state] == UIGestureRecognizerStateBegan) {
+        // This never seems to be called.  Swipe Gestures only ever "end".
+        swipeStartPoint = b;
+    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+    } else if (recognizer.state == UIGestureRecognizerStateEnded) {
+        [self findNextItemInDirection:angle];
     }
 }
 
