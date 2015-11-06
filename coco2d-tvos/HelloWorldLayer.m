@@ -6,7 +6,7 @@
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
-#import "SimpleAudioEngine.h"
+#import "ObjectAL.h"
 #import "CCTVMenu.h"
 
 // HelloWorldLayer implementation
@@ -48,7 +48,7 @@
 		// add the label as a child to this Layer
 		[self addChild: label];
         
-        [[SimpleAudioEngine sharedEngine] playEffect:@"ping1.aiff"];
+//        [[SimpleAudioEngine sharedEngine] playEffect:@"ping1.aiff"];
         
         
         CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Item 1" fontName:@"Helvetica" fontSize:66]];
@@ -57,6 +57,11 @@
         item2.position = CGPointMake(size.width * 0.75, size.height * 0.25);
         CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Item 3" fontName:@"Helvetica" fontSize:66]];
         item3.position = CGPointMake(size.width * 0.5, size.height * 0.5);
+        
+        [item3 setBlock:^(id sender) {
+            [[OALSimpleAudio sharedInstance] playEffect:@"ping1.aiff" loop:NO];
+        }];
+        
         
         CCTVMenu *menu = [[CCTVMenu alloc] initWithArray:@[item1, item2, item3]];
         menu.position = CGPointZero;

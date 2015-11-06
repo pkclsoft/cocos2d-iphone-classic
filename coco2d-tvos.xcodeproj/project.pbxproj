@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D013E4351BC26DAA003947A7 /* libCocosDenshion_tvos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D013E4321BC26D9C003947A7 /* libCocosDenshion_tvos.a */; };
 		D013E5161BC26ED1003947A7 /* ping1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D013E5151BC26ED1003947A7 /* ping1.aiff */; };
+		D025880E1BEC3976007BF346 /* libObjectAL_tvos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D025880D1BEC2DCB007BF346 /* libObjectAL_tvos.a */; };
 		D0C88BA31BBD56BA0043A1BD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88BA21BBD56BA0043A1BD /* QuartzCore.framework */; };
 		D0C88BA51BBD56BA0043A1BD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88BA41BBD56BA0043A1BD /* OpenGLES.framework */; };
 		D0C88BA71BBD56BA0043A1BD /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C88BA61BBD56BA0043A1BD /* OpenAL.framework */; };
@@ -52,6 +53,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D013E40F1BC26D1C003947A7;
 			remoteInfo = CocosDenshion_tvos;
+		};
+		D02588091BEC2DCB007BF346 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D025870C1BEC2BCD007BF346;
+			remoteInfo = ObjectAL_tvos;
+		};
+		D025880C1BEC2DCB007BF346 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0C88E291BBD618E0043A1BD /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D02587EA1BEC2BCD007BF346;
+			remoteInfo = ObjectAL_tvos;
 		};
 		D0C88E371BBD618F0043A1BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -175,6 +190,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D025880E1BEC3976007BF346 /* libObjectAL_tvos.a in Frameworks */,
 				D013E4351BC26DAA003947A7 /* libCocosDenshion_tvos.a in Frameworks */,
 				D0C88F331BBD63C70043A1BD /* libcocos2d_tvos.a in Frameworks */,
 				D0C88BA71BBD56BA0043A1BD /* OpenAL.framework in Frameworks */,
@@ -261,6 +277,7 @@
 				D013E4341BC26D9C003947A7 /* libkazmath_tvos.a */,
 				D013E4321BC26D9C003947A7 /* libCocosDenshion_tvos.a */,
 				D013E5141BC26E9E003947A7 /* libcocos2d_chipmunk_tvos.a */,
+				D025880D1BEC2DCB007BF346 /* libObjectAL_tvos.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -279,6 +296,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D025880A1BEC2DCB007BF346 /* PBXTargetDependency */,
 				D013E5181BC270DF003947A7 /* PBXTargetDependency */,
 				D0C88F321BBD63BB0043A1BD /* PBXTargetDependency */,
 			);
@@ -343,6 +361,13 @@
 			fileType = archive.ar;
 			path = libcocos2d_chipmunk_tvos.a;
 			remoteRef = D013E5131BC26E9E003947A7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D025880D1BEC2DCB007BF346 /* libObjectAL_tvos.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectAL_tvos.a;
+			remoteRef = D025880C1BEC2DCB007BF346 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D0C88E381BBD618F0043A1BD /* libbuild all libs.a */ = {
@@ -462,6 +487,11 @@
 			name = CocosDenshion_tvos;
 			targetProxy = D013E5171BC270DF003947A7 /* PBXContainerItemProxy */;
 		};
+		D025880A1BEC2DCB007BF346 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ObjectAL_tvos;
+			targetProxy = D02588091BEC2DCB007BF346 /* PBXContainerItemProxy */;
+		};
 		D0C88F321BBD63BB0043A1BD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = cocos2d_tvos;
@@ -523,9 +553,15 @@
 					external/Chipmunk/include/chipmunk,
 					"cocos2d/**",
 					CocosDenshion,
+					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/coco2d-tvos/Info.plist";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-all_load",
+					"-ObjC",
+					"-lxml2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocos2d.tvos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 3;
@@ -548,9 +584,15 @@
 					external/Chipmunk/include/chipmunk,
 					"cocos2d/**",
 					CocosDenshion,
+					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/coco2d-tvos/Info.plist";
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-all_load",
+					"-ObjC",
+					"-lxml2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocos2d.tvos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 3;
