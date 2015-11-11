@@ -206,6 +206,28 @@ enum {
 	return nil;
 }
 
+-(CCMenuItem *) itemForTouchLocation:(CGPoint)touchLocation
+{
+	CCMenuItem* item;
+	CCARRAY_FOREACH(_children, item){
+		// ignore invisible and disabled items: issue #779, #866
+		if ( [item visible] && [item isEnabled] ) {
+            
+			CGPoint local = [item convertToNodeSpace:touchLocation];
+			CGRect r = [item activeArea];
+			r.origin = CGPointZero;
+            
+			if( CGRectContainsPoint( r, local ) )
+				return item;
+		}
+	}
+	return nil;
+}
+
+- (BOOL)isNodeInTreeTouched:(CGPoint)pt {
+    return ([self itemForTouchLocation:pt] != nil);
+}
+
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	if( _state != kCCMenuStateWaiting || !_visible || ! _enabled)

@@ -323,8 +323,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 	
 #elif defined(__CC_PLATFORM_MAC)
-    NSInteger device = [[CCConfiguration sharedConfiguration] runningDevice];
-    
 	if (device == kCCDeviceMacRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:kCCFileUtilsMacHD];

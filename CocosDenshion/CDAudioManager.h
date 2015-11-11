@@ -179,6 +179,8 @@ typedef enum {
 -(void) audioSessionInterrupted;
 -(void) audioSessionResumed;
 -(void) setResignBehavior:(tAudioManagerResignBehavior) resignBehavior autoHandle:(BOOL) autoHandle;
+/** Returns true is audio is muted at a hardware level e.g user has ringer switch set to off */
+-(BOOL) isDeviceMuted;
 /** Returns true if another app is playing audio such as the iPod music player */
 -(BOOL) isOtherAudioPlaying;
 /** Sets the way the audio manager interacts with the operating system such as whether it shares output with other apps or obeys the mute switch */

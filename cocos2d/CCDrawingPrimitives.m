@@ -140,6 +140,20 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
+void ccDrawLines(const CGPoint *vertices, NSUInteger numberOfLines)
+{
+    lazy_init();
+
+    [shader_ use];
+    [shader_ setUniformsForBuiltins];
+    [shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
+    
+    ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    glDrawArrays(GL_LINES, 0, (int)numberOfLines);
+    
+    CC_INCREMENT_GL_DRAWS(1);
+}
 
 void ccDrawLine( CGPoint origin, CGPoint destination )
 {

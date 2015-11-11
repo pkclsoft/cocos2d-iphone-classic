@@ -410,4 +410,8 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	return frame;
 }
 
+- (BOOL) containsFrameByName:(NSString*)name {
+    return ([_spriteFrames objectForKey:name] != nil);
+}
+
 @end

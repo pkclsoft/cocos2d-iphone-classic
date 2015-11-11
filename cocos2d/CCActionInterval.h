@@ -268,6 +268,8 @@ typedef struct _ccBezierConfig {
 	CGPoint controlPoint_1;
 	//! Bezier control point 2
 	CGPoint controlPoint_2;
+    //! Auto rotate sprite
+    BOOL autorotate;
 } ccBezierConfig;
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.

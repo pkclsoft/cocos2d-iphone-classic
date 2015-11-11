@@ -118,4 +118,9 @@
  */
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name;
 
+/**
+ Returns YES if the sprite frame exists in the cache.
+ */
+- (BOOL) containsFrameByName:(NSString*)name;
+
 @end

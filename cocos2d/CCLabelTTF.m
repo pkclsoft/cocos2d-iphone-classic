@@ -281,6 +281,7 @@
     if ( _shadowEnabled || _strokeEnabled )
     {
         CCFontDefinition *tempDef = [self prepareFontDefinitionAndAdjustForResolution:true];
+    
         tex = [[CCTexture2D alloc ]initWithString:_string fontDef:tempDef];
     }
     else
@@ -510,6 +511,9 @@
         retDefinition.lineBreakMode  = _lineBreakMode;
         retDefinition.fontFillColor  = _textFillColor;
     
+        if ( _dimensions.width != 0 && _dimensions.height != 0 ) {
+            retDefinition.dimensions = CC_SIZE_POINTS_TO_PIXELS(_dimensions);
+        }
     
         // stroke
         if ( _strokeEnabled )

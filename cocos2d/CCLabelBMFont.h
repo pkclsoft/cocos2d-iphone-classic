@@ -107,6 +107,10 @@ typedef struct _KerningHashElement
     
 	// FNTConfig: Common Height. Should be signed (issue #1343)
 	NSInteger		_commonHeight;
+    NSInteger       _base;
+	NSInteger		_ascenderHeight;
+	NSInteger		_xHeight;
+	NSInteger		_capHeight;
     
 	// Padding
 	ccBMFontPadding	_padding;
@@ -126,6 +130,24 @@ typedef struct _KerningHashElement
 /** initializes a CCBMFontConfiguration with a FNT file */
 -(id) initWithFNTfile:(NSString*)FNTfile;
 @end
+
+/**
+ *  This property allows us to change the top bounding box around text.
+ */
+typedef enum {
+    kCCLabelTopDisplayAscender = 0,
+    kCCLabelTopDisplayCapHeight,
+    kCCLabelTopDisplayXHeight,
+} CCLabelTopDisplay;
+
+/**
+ *  This property allows us to change the bottom bounding box around text.
+ */
+typedef enum {
+	kCCLabelBottomDisplayLineHeight = 0,
+	kCCLabelBottomDisplayDescender,
+	kCCLabelBottomDisplayBaseline,
+} CCLabelBottomDisplay;
 
 
 /** CCLabelBMFont is a subclass of CCSpriteBatchNode
@@ -173,6 +195,7 @@ typedef struct _KerningHashElement
     float _width;
     // alignment of all lines
     CCTextAlignment _alignment;
+    CCVerticalTextAlignment _vAlignment;
     
 	CCBMFontConfiguration	*_configuration;
     
@@ -184,6 +207,10 @@ typedef struct _KerningHashElement
 	
 	// offset of the texture atlas
 	CGPoint			_imageOffset;
+    float   _lineHeight;
+    CCLabelBottomDisplay _bottomDisplay;
+    CCLabelTopDisplay _topDisplay;
+	CCArray *lines;
 	
 	// reused char
 	CCSprite		*_reusedChar;
@@ -197,12 +224,22 @@ typedef struct _KerningHashElement
 
 /** alignment used for the label */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
+@property (nonatomic,assign,readonly) CCVerticalTextAlignment verticalAlignment;
 /** fntFile used for the font */
 @property (nonatomic,retain) NSString* fntFile;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3B color;
+/**
+ *  Line-height adjusts the vertical spacing between multiline text
+ *  Default is 1 which is the common line height from the .fnt file, otherwise
+ *  it scales the common line height.
+ */
+@property (nonatomic,readwrite) float lineHeight;
+/** Text display determines how the bounding box encloses the text. */
+@property (nonatomic,readwrite) CCLabelBottomDisplay bottomDisplay;
+@property (nonatomic,readwrite) CCLabelTopDisplay topDisplay;
 
 
 /** creates a BMFont label with an initial string and the FNT file. */
@@ -227,6 +264,12 @@ typedef struct _KerningHashElement
 
 /** set label alignment */
 - (void)setAlignment:(CCTextAlignment)alignment;
+
+/** set bounding box alignment to a certain text bottom */
+- (void)setBottomDisplay:(CCLabelBottomDisplay)bottomDisplay;
+
+/** set bounding box alignment to a certain text bottom */
+- (void)setTopDisplay:(CCLabelTopDisplay)topDisplay;
 
 @end
 

@@ -975,6 +975,20 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	
 	CCNode *node = (CCNode*)_target;
 
+    if (_config.autorotate == YES) {
+        // calculate the rotation in degrees
+        // find the point in time t with a quadratic bezier of the first 3 points
+        float qx = (powf(1-t,2)*xa + 2*(1-t)*t*xb+powf(t,2)*xc);
+        float qy = (powf(1-t,2)*ya + 2*(1-t)*t*yb+powf(t,2)*yc);
+        
+        // the tangent is equal to the slope between the position point and the point on the quadradic bezier
+        double deltaX = x-qx;
+        double deltaY = y-qy;
+        
+        double degrees = (-180/M_PI)*ccpToAngle(CGPointMake(deltaX,deltaY));
+        [node setRotation:degrees];
+    }
+
 #if CC_ENABLE_STACKABLE_ACTIONS
 	CGPoint currentPos = [node position];
 	CGPoint diff = ccpSub(currentPos, _previousPosition);
@@ -996,6 +1010,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	r.endPosition	 = ccpNeg(_config.endPosition);
 	r.controlPoint_1 = ccpAdd(_config.controlPoint_2, ccpNeg(_config.endPosition));
 	r.controlPoint_2 = ccpAdd(_config.controlPoint_1, ccpNeg(_config.endPosition));
+    r.autorotate = _config.autorotate;
 
 	CCBezierBy *action = [[self class] actionWithDuration:[self duration] bezier:r];
 	return action;
@@ -1021,6 +1036,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_config.controlPoint_1 = ccpSub(_toConfig.controlPoint_1, _startPosition);
 	_config.controlPoint_2 = ccpSub(_toConfig.controlPoint_2, _startPosition);
 	_config.endPosition = ccpSub(_toConfig.endPosition, _startPosition);
+    _config.autorotate = _toConfig.autorotate;
 }
 
 -(id) copyWithZone: (NSZone*) zone

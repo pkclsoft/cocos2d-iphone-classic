@@ -97,6 +97,9 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints );
 /** draws a line given the origin and destination point measured in points. */
 void ccDrawLine( CGPoint origin, CGPoint destination );
 
+/** draws an array of lines given the origin and destination point measured in points. */
+void ccDrawLines(const CGPoint *vertices, NSUInteger numberOfLines);
+
 /** draws a rectangle given the origin and destination point measured in points. */
 void ccDrawRect( CGPoint origin, CGPoint destination );
 

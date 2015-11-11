@@ -786,11 +786,19 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		_selectedIndex=index;
         
 		if( _currentItem )
-			[_currentItem removeFromParentAndCleanup:NO];
+            [_currentItem runAction:[CCFadeOut actionWithDuration:0.2]];
+             //removeFromParentAndCleanup:NO];
 		
 		CCMenuItem *item = [_subItems objectAtIndex:_selectedIndex];
+        if (item.parent == nil) {
 		[self addChild:item z:0];
+        }
+        
+        item.visible = self.visible;
+        item.opacity = 0;
+
         self.currentItem = item;
+        [_currentItem runAction:[CCFadeIn actionWithDuration:0.2]];
 
 		CGSize s = [item contentSize];
 		[self setContentSize: s];
