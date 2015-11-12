@@ -172,6 +172,13 @@
     [super setEnabled:enabled];
     
     if (enabled == YES) {
+        if (focusedItemIsFocusable == NO) {
+            // Before we do this, we need to reset the scale of the item so that restarting the focus scaling
+            // action doesn't use the wrong scale as the starting point.
+            //
+            [[self focusedNode] setScale:_focusedItemScale];
+        }
+        
         [self startFocus];
     }
     
