@@ -52,6 +52,29 @@
 
 @end
 
+/**
+ *  This subclass of CCScaleTo is used to scale a focused menu item back down to it's "normal", or
+ *  "unfocused" scale.  This is used by setFocusedItem: to ensure that when an item is given focus
+ *  we remember correctly, the "unfocused" scale.
+ */
+@interface CCScaleTo_CCTVMenu : CCScaleTo
+
+/// The end scale for the action.
+@property (nonatomic) float endScale;
+
+@end
+
+@implementation CCScaleTo_CCTVMenu
+
+/**
+ *  Returns the end scale for the action, taken from the super._endScaleX.
+ */
+- (float) endScale {
+    return _endScaleX;
+}
+
+@end
+
 @implementation CCTVMenu {
     
     /// The start point of a pan touch.
@@ -68,6 +91,8 @@
     BOOL focusedItemIsFocusable;
     BOOL focusedItemIsItem;
 }
+
+#define kFocusLostActionTag 1002
 
 /**
  *  Initialises the menu with defaults.
@@ -349,13 +374,32 @@
         //
         _focusedItemScale = [self focusedNode].scale;
         
+        // Just in case the item was in the act of de-focusing when it regained focus, ensure we get the right
+        // "unfocused" scale.
+        //
+        CCNode *node = [self focusedNode];
+        
+        if ([node numberOfRunningActions] == 1) {
+            // Is the only action running the "lost focus" action?
+            //
+            CCActionInterval *action = (CCActionInterval*)[node getActionByTag:kFocusLostActionTag];
+            
+            // If so, then cast it, and grab the endScale as that will be the scale that the item needs as it's
+            // unfocused scale.
+            //
+            if (action != nil) {
+                CCScaleTo_CCTVMenu *scaleToAction = (CCScaleTo_CCTVMenu*)action;
+                _focusedItemScale = scaleToAction.endScale;
+            }
+        }
+        
         self.focusAction = [CCRepeatForever actionWithAction:
                         [CCSequence actions:
                          [CCScaleTo actionWithDuration:0.5 scale:_focusedItemScale * 1.2],
                          [CCScaleTo actionWithDuration:0.5 scale:_focusedItemScale * 1.15],
                          nil]];
         
-        [[self focusedNode] runAction:_focusAction];
+        [node runAction:_focusAction];
     }
     
     if ((focusedItemIsItem == YES) && (self.parent != nil)) {
@@ -373,7 +417,10 @@
         [[self focusedNode] stopAllActions];
         self.focusAction = nil;
         
-        [[self focusedNode] runAction:[CCScaleTo actionWithDuration:0.4 scale:_focusedItemScale]];
+        CCScaleTo_CCTVMenu *action = [CCScaleTo_CCTVMenu actionWithDuration:0.4 scale:_focusedItemScale];
+        action.tag = kFocusLostActionTag;
+        
+        [[self focusedNode] runAction:action];
     }
     
     if ((focusedItemIsItem == YES) && (self.parent != nil)) {
