@@ -93,6 +93,7 @@
 }
 
 #define kFocusLostActionTag 1002
+#define kFocusedActionTag 1004
 
 /**
  *  Initialises the menu with defaults.
@@ -189,11 +190,44 @@
     [super addChild:child z:z tag:aTag];
 }
 
+- (void) removeChild:(CCNode *)node cleanup:(BOOL)cleanup {
+    // First, if the node is the focused node, then move focus.
+    //
+    if (node == [self focusedNode]) {
+        [self findClosestFocusableItem];
+    }
+
+    [super removeChild:node cleanup:cleanup];
+}
+
+-(void) removeChildByTag:(NSInteger)aTag
+{
+    [self removeChildByTag:aTag cleanup:YES];
+}
+
+-(void) removeChildByTag:(NSInteger)aTag cleanup:(BOOL)cleanup
+{
+    NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
+    
+    CCNode *child = [self getChildByTag:aTag];
+    
+    if (child == nil) {
+        CCLOG(@"cocos2d: removeChildByTag: child not found!");
+    } else {
+        NSLog(@"removing: %@, tag: %ld from menu", [[child class] description], (long)child.tag);
+        
+        [self removeChild:child cleanup:cleanup];
+    }
+}
+
+
 /**
  *  Overrides setEnabled: so that when the menu is re-enabled, it can re-apply focus to
  *  whatever item was in focus prior to the menu being disabled.
  */
 - (void) setEnabled:(BOOL)enabled {
+    NSLog(@"Menu Enabled: %@ in parent: %@", (enabled ? @"YES" : @"NO"), [[self.parent class] description]);
+
     [super setEnabled:enabled];
     
     if (enabled == YES) {
@@ -206,8 +240,6 @@
         
         [self startFocus];
     }
-    
-    NSLog(@"Menu Enabled: %@ in parent: %@", (enabled ? @"YES" : @"NO"), [[self.parent class] description]);
 }
 
 /**
@@ -282,6 +314,43 @@
 }
 
 /**
+ *  Locates the menu item that is closest to the current focused item and shifts focus to it.
+ */
+- (void) findClosestFocusableItem {
+    [self findClosestFocusableItemToPosition:[self focusedNode].position];
+}
+
+/**
+ *  Locates the menu item that is closest to the specified position item and shifts focus to it.
+ */
+- (void) findClosestFocusableItemToPosition:(CGPoint)position {
+    CCMenuItem<CCFocusableMenuItem>* item = nil;
+    CCMenuItem<CCFocusableMenuItem>* closestItem = nil;
+    float closestDistance = MAXFLOAT;
+    
+    CCARRAY_FOREACH(_children, item){
+        if ((item != [self focusedNode]) && (item != _backItem) && (item.isEnabled == YES)) {
+            float thisDistance = ccpDistance(position, item.position);
+            
+            if (thisDistance < closestDistance) {
+                closestItem = item;
+                closestDistance = thisDistance;
+            }
+        }
+    }
+    
+    if (closestItem != nil) {
+        [self setFocusedItem:closestItem];
+        
+        // Assume that if the app wants an item to be focused, then the menu gets control of panning
+        //
+        _panControlActive = YES;
+    } else {
+        NSLog(@"Unable to find another closer item");
+    }
+}
+
+/**
  *  Causes the CCTVMenu to search through it's children for the next item that is:
  *
  *  1. enabled
@@ -341,6 +410,9 @@
  */
 - (void) setFocusedItem:(id<CCFocusableMenuItem>)focusedItem {
     if (_focusedItem != focusedItem) {
+        CCLOG(@"setFocusedItem: current %@", [self focusedNode]);
+        CCLOG(@"setFocusedItem: new %@", (CCNode*)focusedItem);
+        
         if (_focusedItem != nil) {
             [self resetFocus];
         }
@@ -360,6 +432,13 @@
 }
 
 /**
+ *  Set the focused item to be the specified node (which may not implement the CCFocusableItem protocol).
+ */
+- (void) setFocusedNode:(id)node {
+    [self setFocusedItem:node];
+}
+
+/**
  *  Gives focus to the focused item.  If the item implements CCFocusableMenuItem, then
  *  the item is told that is is focused.
  *
@@ -367,6 +446,8 @@
  *  scale-wobble.
  */
 - (void) startFocus {
+    CCLOG(@"startFocus: %@", [self focusedNode]);
+    
     if (focusedItemIsFocusable == YES) {
         _focusedItem.focused = YES;
     } else {
@@ -379,27 +460,29 @@
         //
         CCNode *node = [self focusedNode];
         
-        if ([node numberOfRunningActions] == 1) {
-            // Is the only action running the "lost focus" action?
-            //
-            CCActionInterval *action = (CCActionInterval*)[node getActionByTag:kFocusLostActionTag];
-            
-            // If so, then cast it, and grab the endScale as that will be the scale that the item needs as it's
-            // unfocused scale.
-            //
-            if (action != nil) {
-                CCScaleTo_CCTVMenu *scaleToAction = (CCScaleTo_CCTVMenu*)action;
-                _focusedItemScale = scaleToAction.endScale;
-            }
+        // Is the only action running the "lost focus" action?
+        //
+        CCActionInterval *action = (CCActionInterval*)[node getActionByTag:kFocusLostActionTag];
+        
+        // If so, then cast it, and grab the endScale as that will be the scale that the item needs as it's
+        // unfocused scale.
+        //
+        if (action != nil) {
+            CCScaleTo_CCTVMenu *scaleToAction = (CCScaleTo_CCTVMenu*)action;
+            _focusedItemScale = scaleToAction.endScale;
         }
         
-        self.focusAction = [CCRepeatForever actionWithAction:
-                        [CCSequence actions:
-                         [CCScaleTo actionWithDuration:0.5 scale:_focusedItemScale * 1.2],
-                         [CCScaleTo actionWithDuration:0.5 scale:_focusedItemScale * 1.15],
-                         nil]];
-        
-        [node runAction:_focusAction];
+        if ([node getActionByTag:kFocusedActionTag] == nil) {
+            self.focusAction = [CCRepeatForever actionWithAction:
+                                [CCSequence actions:
+                                 [CCScaleTo actionWithDuration:0.5 scale:_focusedItemScale * 1.2],
+                                 [CCScaleTo actionWithDuration:0.5 scale:_focusedItemScale * 1.15],
+                                 nil]];
+            self.focusAction.tag = kFocusedActionTag;
+            
+            [node runAction:_focusAction];
+            
+        }
     }
     
     if ((focusedItemIsItem == YES) && (self.parent != nil)) {
@@ -411,10 +494,12 @@
  *  Resets the focus of the focused item, effectively turning the focus animation off.
  */
 - (void) resetFocus {
+    CCLOG(@"resetFocus: %@", [self focusedNode]);
+    
     if (focusedItemIsFocusable == YES) {
         _focusedItem.focused = NO;
     } else {
-        [[self focusedNode] stopAllActions];
+        [[self focusedNode] stopActionByTag:kFocusedActionTag];
         self.focusAction = nil;
         
         CCScaleTo_CCTVMenu *action = [CCScaleTo_CCTVMenu actionWithDuration:0.4 scale:_focusedItemScale];

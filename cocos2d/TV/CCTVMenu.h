@@ -162,4 +162,19 @@ typedef enum {
  */
 - (void) findNextFocusableItem;
 
+/**
+ *  Locates the menu item that is closest to the current focused item and shifts focus to it.
+ */
+- (void) findClosestFocusableItemToPosition:(CGPoint)position;
+
+/**
+ *  Set the focused item to be the specified node (which may not implement the CCFocusableItem protocol).
+ */
+- (void) setFocusedNode:(id)node;
+
+/**
+ *  Returns the menu item that currently has focus as a CCNode
+ */
+- (CCNode*) focusedNode;
+
 @end
