@@ -50,6 +50,10 @@
  */
 @property (nonatomic) float focusedItemScale;
 
+@property (nonatomic, assign) BOOL focusChanging;
+
+@property (nonatomic, assign) float pressChangeDirection;
+
 @end
 
 /**
@@ -156,6 +160,8 @@
     [self removePanRecognizer];
     [self removeSwipeRecognizer];
     [self removeTapRecognizers];
+	
+	[[[CCDirector sharedDirector] touchDispatcher] removeDelegate:self];
     
     if (self.focusAction != nil) {
         [[self focusAction] stop];
@@ -176,6 +182,7 @@
     [super onEnter];
     
     [[CCTVMenuStack sharedTVMenuStack] pushMenu:self];
+	[[[CCDirector sharedDirector] touchDispatcher] addStandardDelegate:self priority:0];
 }
 
 /**
@@ -516,6 +523,73 @@
 /**
  * Override normal CCMenu behaviour.
  */
+
+- (void)ccPressBegan:(UIPress *)press withEvent:(UIPressesEvent *)event {
+	
+}
+
+- (void)ccPressEnded:(UIPress *)press withEvent:(UIPressesEvent *)event {
+	
+}
+
+- (void)ccPressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	
+	
+	for (UIPress *aPress in presses) {
+		if (aPress.type == UIPressTypeUpArrow) {
+			_pressChangeDirection = 0;
+			[self focusChangeByPress];
+			_focusChanging = NO;
+		} else if (aPress.type == UIPressTypeDownArrow) {
+			_pressChangeDirection = 180;
+			[self focusChangeByPress];
+			_focusChanging = NO;
+		} else if (aPress.type == UIPressTypeRightArrow) {
+			_pressChangeDirection = 90;
+			[self focusChangeByPress];
+			_focusChanging = NO;
+		} else if (aPress.type == UIPressTypeLeftArrow) {
+			_pressChangeDirection = 270;
+			[self focusChangeByPress];
+			_focusChanging = NO;
+		}
+		
+	}
+	
+}
+
+- (void)ccPressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	[self unschedule:@selector(focusChangeByPress)];
+	_focusChanging = NO;
+}
+
+- (void)ccPressesChanged:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	if (!_focusChanging) {
+		_focusChanging = YES;
+		for (UIPress *aPress in presses) {
+			if (aPress.type == UIPressTypeUpArrow) {
+				_pressChangeDirection = 0;
+				[self schedule:@selector(focusChangeByPress) interval:0.20];
+			} else if (aPress.type == UIPressTypeDownArrow) {
+				_pressChangeDirection = 180;
+				[self schedule:@selector(focusChangeByPress) interval:0.20];
+			} else if (aPress.type == UIPressTypeRightArrow) {
+				_pressChangeDirection = 90;
+				[self schedule:@selector(focusChangeByPress) interval:0.20];
+			} else if (aPress.type == UIPressTypeLeftArrow) {
+				_pressChangeDirection = 270;
+				[self schedule:@selector(focusChangeByPress) interval:0.20];
+			}
+			
+		}
+	}
+	
+}
+
+- (void)focusChangeByPress {
+	[self findNextItemInDirection:_pressChangeDirection];
+}
+
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
     return NO;

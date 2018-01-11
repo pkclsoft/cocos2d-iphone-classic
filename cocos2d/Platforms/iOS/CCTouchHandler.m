@@ -85,6 +85,14 @@
 			_enabledSelectors |= kCCTouchSelectorEndedBit;
 		if( [del respondsToSelector:@selector(ccTouchesCancelled:withEvent:)] )
 			_enabledSelectors |= kCCTouchSelectorCancelledBit;
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+		if ( [del respondsToSelector:@selector(ccPressesBegan:withEvent:)] )
+			_enabledSelectors |= kCCPressSelectorBeganBit;
+		if ( [del respondsToSelector:@selector(ccPressesEnded:withEvent:)] )
+			_enabledSelectors |= kCCPressSelectorEndedBit;
+		if ( [del respondsToSelector:@selector(ccPressesChanged:withEvent:)] )
+			_enabledSelectors |= kCCPressSelectorChangedBit;
+#endif
 	}
 	return self;
 }
@@ -120,6 +128,14 @@
 			_enabledSelectors |= kCCTouchSelectorEndedBit;
 		if( [aDelegate respondsToSelector:@selector(ccTouchCancelled:withEvent:)] )
 			_enabledSelectors |= kCCTouchSelectorCancelledBit;
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+		if ( [aDelegate respondsToSelector:@selector(ccPressBegan:withEvent:)] )
+			_enabledSelectors |= kCCPressSelectorBeganBit;
+		if ( [aDelegate respondsToSelector:@selector(ccPressEnded:withEvent:)] )
+			_enabledSelectors |= kCCPressSelectorEndedBit;
+		if ( [aDelegate respondsToSelector:@selector(ccPressChanged:withEvent:)] )
+			_enabledSelectors |= kCCPressSelectorChangedBit;
+#endif
 	}
 
 	return self;

@@ -38,7 +38,15 @@ typedef enum
 	kCCTouchSelectorMovedBit = 1 << 1,
 	kCCTouchSelectorEndedBit = 1 << 2,
 	kCCTouchSelectorCancelledBit = 1 << 3,
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+	kCCPressSelectorBeganBit = 1 << 4,
+	kCCPressSelectorEndedBit = 1 << 5,
+	kCCPressSelectorChangedBit = 1 << 6,
+
+	kCCTouchSelectorAllBits = ( kCCTouchSelectorBeganBit | kCCTouchSelectorMovedBit | kCCTouchSelectorEndedBit | kCCTouchSelectorCancelledBit | kCCPressSelectorBeganBit | kCCPressSelectorEndedBit | kCCPressSelectorChangedBit),
+#else
 	kCCTouchSelectorAllBits = ( kCCTouchSelectorBeganBit | kCCTouchSelectorMovedBit | kCCTouchSelectorEndedBit | kCCTouchSelectorCancelledBit),
+#endif
 } ccTouchSelectorFlag;
 
 
@@ -47,6 +55,11 @@ enum {
 	kCCTouchMoved,
 	kCCTouchEnded,
 	kCCTouchCancelled,
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+	kCCPressBegan,
+	kCCPressEnded,
+	kCCPressChanged,
+#endif
 
 	kCCTouchMax,
 };

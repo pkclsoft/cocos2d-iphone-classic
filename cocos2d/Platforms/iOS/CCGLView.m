@@ -357,6 +357,31 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 }
 
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+- (void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	if (_touchDelegate) {
+		[_touchDelegate pressesBegan:presses withEvent:event];
+	}
+	[super pressesBegan:presses withEvent:event];
+}
+
+- (void)pressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	if (_touchDelegate) {
+		[_touchDelegate pressesEnded:presses withEvent:event];
+	}
+	[super pressesEnded:presses withEvent:event];
+}
+
+- (void)pressesChanged:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	//NSLog(@"pressesChanged called in CCGLView");
+	if (_touchDelegate) {
+		[_touchDelegate pressesChanged:presses withEvent:event];
+	}
+	//[super pressesEnded:presses withEvent:event];
+}
+
+#endif
+
 @end
 
 

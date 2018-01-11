@@ -56,6 +56,11 @@
 - (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event;
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event;
 - (void)ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event;
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+- (void)ccPressBegan:(UIPress *)press withEvent:(UIPressesEvent *)event;
+- (void)ccPressEnded:(UIPress *)press withEvent:(UIPressesEvent *)event;
+- (void)ccPressChanged:(UIPress *)press withEvent:(UIPressesEvent *)event;
+#endif
 @end
 
 /**
@@ -70,6 +75,11 @@
 - (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)ccTouchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+- (void)ccPressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event;
+- (void)ccPressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event;
+- (void)ccPressesChanged:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event;
+#endif
 @end
 
 #endif // __CC_PLATFORM_IOS

@@ -56,7 +56,11 @@
 		handlerHelperData[kCCTouchMoved] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesMoved:withEvent:),@selector(ccTouchMoved:withEvent:),kCCTouchSelectorMovedBit};
 		handlerHelperData[kCCTouchEnded] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesEnded:withEvent:),@selector(ccTouchEnded:withEvent:),kCCTouchSelectorEndedBit};
 		handlerHelperData[kCCTouchCancelled] = (struct ccTouchHandlerHelperData) {@selector(ccTouchesCancelled:withEvent:),@selector(ccTouchCancelled:withEvent:),kCCTouchSelectorCancelledBit};
-
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+		handlerHelperData[kCCPressBegan] = (struct ccTouchHandlerHelperData) {@selector(ccPressesBegan:withEvent:),@selector(ccPressBegan:withEvent:), kCCPressSelectorBeganBit};
+		handlerHelperData[kCCPressEnded] = (struct ccTouchHandlerHelperData) {@selector(ccPressesEnded:withEvent:),@selector(ccPressEnded:withEvent:), kCCPressSelectorEndedBit};
+		handlerHelperData[kCCPressChanged] = (struct ccTouchHandlerHelperData) {@selector(ccPressesChanged:withEvent:),@selector(ccPressChanged:withEvent:), kCCPressSelectorChangedBit};
+#endif
 	}
 
 	return self;
@@ -258,7 +262,11 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 //
 -(void) touches:(NSSet*)touches withEvent:(UIEvent*)event withTouchType:(unsigned int)idx
 {
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+	NSAssert(idx < 7, @"Invalid idx value");
+#else
 	NSAssert(idx < 4, @"Invalid idx value");
+#endif
 
 	id mutableTouches;
 	locked = YES;
@@ -371,6 +379,28 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 	if( dispatchEvents )
 		[self touches:touches withEvent:event withTouchType:kCCTouchCancelled];
 }
+
+#ifdef __TV_OS_VERSION_MAX_ALLOWED
+- (void)pressesBegan:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	if ( dispatchEvents) {
+		[self touches:presses withEvent:event withTouchType:kCCPressBegan];
+	}
+}
+
+- (void)pressesEnded:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	if ( dispatchEvents) {
+		[self touches:presses withEvent:event withTouchType:kCCPressEnded];
+	}
+}
+
+- (void)pressesChanged:(NSSet<UIPress *> *)presses withEvent:(UIPressesEvent *)event {
+	if ( dispatchEvents) {
+		[self touches:presses withEvent:event withTouchType:kCCPressChanged];
+	}
+}
+
+#endif
+
 @end
 
 #endif // __CC_PLATFORM_IOS
