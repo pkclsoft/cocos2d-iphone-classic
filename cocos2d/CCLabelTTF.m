@@ -130,6 +130,10 @@
 		_fontName = [[self getFontName: name] copy];
 		_fontSize = size;
 		_lineBreakMode = lineBreakMode;
+        _strokeEnabled = NO;
+        _shadowEnabled = NO;
+        _textFillEnabled = NO;
+        _textFillColor = ccWHITE;
 
 		[self setString:str];
 	}
@@ -278,7 +282,7 @@
 {				
 	CCTexture2D *tex;
     
-    if ( _shadowEnabled || _strokeEnabled )
+    if ( _shadowEnabled || _strokeEnabled || _textFillEnabled)
     {
         CCFontDefinition *tempDef = [self prepareFontDefinitionAndAdjustForResolution:true];
     
@@ -319,7 +323,7 @@
 			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
 		else
 			[tex setResolutionType:kCCResolutioniPhone];
-	}
+        }
 #endif
 	
 	[self setTexture:tex];
@@ -346,7 +350,7 @@
 		_fontName       = [definition.fontName copy];
 		_fontSize       = definition.fontSize;
 		_lineBreakMode  = definition.lineBreakMode;
-        
+
         // take care of shadow
         if ([definition shadowEnabled])
         {
@@ -367,10 +371,9 @@
             [self disableStrokeAndUpdateImage:false];
         }
         
-        
+        _textFillEnabled = YES;
         [self setFontFillColor: definition.fontFillColor updateImage:false];
-        
-        
+
         // actually update the string
         [self setString:string];
 	}
@@ -594,10 +597,9 @@
     {
         [self disableStrokeAndUpdateImage:false];
     }
-    
-    
+
+    _textFillEnabled = YES;
     [self setFontFillColor: fontDef.fontFillColor updateImage:false];
-    
     
     // actually update the texture
     [self updateTexture];
